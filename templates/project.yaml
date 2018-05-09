@@ -47,7 +47,7 @@ local-post-stop-cmds: []
 # Rsync task
 # ----------
 # Comma-separated list of files to ignore when rsyncing to remote machines
-rsync-excludes: [".git", "build", "*.trace", ".DS_Store"]
+rsync-excludes: [".git", "build", "*.trace", ".DS_Store", "fetched.*"]
 
 # List of additional parameters to pass to rsync
 # rsync-extra-opts: "--copy-links --partial"
