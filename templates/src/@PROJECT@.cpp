@@ -18,7 +18,7 @@ ObColor palette[3] = {
 
 ArgParse::apint demo_shift;
 
-ObRetort Setup (VFBunch *bunch, Atmosphere *atm)
+ObRetort Setup (VFBunch *, Atmosphere *)
 {
   const int N = VisiFeld::NumAllVisiFelds ();
   for (int i = 0; i < N; ++i)
