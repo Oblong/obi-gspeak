@@ -22,7 +22,7 @@ G_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}}
 
 # YOBUILD is where updated system-y libraries for this version of g-speak live.
 # ob-set-defaults sets this based on the g-speak version.
-YOBUILD=/opt/oblong/deps-64-12
+YOBUILD={{yobuild}}
 
 # Cmake options passed to ob-set-defaults (careful, quoting is treacherous here)
 CMAKE_GENERATOR=Ninja

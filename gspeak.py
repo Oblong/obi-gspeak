@@ -34,6 +34,21 @@ def get_yobuild(g_speak_version):
     # NOTE: if the following line fails, please install the Oblong obs package
     return "/opt/oblong/deps-64-" + subprocess.check_output(["obs", "yovo2yoversion", g_speak_version]).rstrip()
 
+def get_yobuild_major(g_speak_version):
+    '''
+    Look up which version of yobuild this gspeak depends on
+    '''
+    p = re.compile(r'YOBUILD_PREFIX.*".*-(.*)"')
+    with open("/opt/oblong/g-speak%s/include/libLoam/c/ob-vers-gen.h" % g_speak_version, 'r') as f:
+        for line in f:
+            m = p.search(line)
+            if (m):
+                return m.group(1)
+
+    # If g-speak wasn't installed, fall back to asking obs
+    # NOTE: if the following line fails, please install the Oblong obs package
+    return subprocess.check_output(["obs", "yovo2yoversion", g_speak_version]).rstrip()
+
 def get_cef_branch(g_speak_version):
     '''
     Look up which cef this g-speak's webthing depends on
@@ -58,12 +73,15 @@ def obi_new(**kwargs):
 
     # On entry, kwargs['project_path'] is the directory to create and populate
     # from the files in the templates subdirectory next to this file
+    # $G_SPEAK/lib/cmake/ObGenerateProject.cmake is an alternative implementation
+    # that should always use the same template syntax and parameters.
     templates_path = os.path.join(os.path.dirname(__file__), 'templates')
 
     project_name = kwargs['project_name']
     project_path = kwargs['project_path']
     g_speak_xy = kwargs['g_speak_version']
     kwargs['yobuild'] = get_yobuild(g_speak_xy)
+    kwargs['yobuild_major'] = get_yobuild_major(g_speak_xy)
     kwargs['cef_branch'] = get_cef_branch(g_speak_xy)
 
     env = jinja2.Environment(loader=jinja2.PackageLoader(__name__),
