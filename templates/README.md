@@ -75,18 +75,14 @@ Try 'ob-set-defaults --help' for more info.
 ### Build
 ```bash
 cd build
-cmake -DG_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}} ..
+cmake [-DG_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}}] ..
 ninja
 ```
 
 Or, to use meson,
 ```bash
-YOBUILD={{yobuild}}
-G_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}}
-export BOOST_ROOT=$YOBUILD
-export PKG_CONFIG_PATH=$YOBUILD/lib/pkgconfig:$YOBUILD/lib/x86_64-linux-gnu/pkgconfig:$G_SPEAK_HOME/lib/pkgconfig
 cd build
-meson ..
+obenv meson ..
 ninja
 ```
 
