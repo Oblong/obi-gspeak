@@ -9,14 +9,19 @@ name: '{{project_name}}'
 # ----------
 # Comma-separated list of command line arguments passed to cmake
 cmake-args: ['-DCMAKE_BUILD_TYPE=RelWithDebInfo',
-             '-DCMAKE_EXPORT_COMPILE_COMMANDS=1']
+             '-DCMAKE_EXPORT_COMPILE_COMMANDS=1',
+             '-GNinja']
 
-# Comma-separated list of arguments passed to cmake --build
-# These are sensitive to the build system generator
-# specified in the cmake-args step
-build-args: ['-j8', '-l8']
+# If meson-args is defined, obi will use meson rather than cmake.
+# Comma-separated list of command line arguments passed to meson
+#meson-args: []
 
-# The directory to perform the out-of-source cmake build
+# Comma-separated list of arguments passed to cmake --build or ninja,
+# e.g. '-v', '-j1' for a clean log.
+# These are sensitive to any build system generator specified in cmake-args.
+build-args: []
+
+# The directory to perform the out-of-source build
 build-dir: "build"
 
 # Override the default obi build task

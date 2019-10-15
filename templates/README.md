@@ -31,6 +31,17 @@ Where `<room-name>` is the name of one of the keys specified in the `rooms` map 
 	obi stop [<room-name>]
 
 
+## IDE Integration
+
+obi generates the compile_commands.json file
+used by many tools and IDEs to understand your project
+and offer information about identifiers when you mouse over them.
+
+### Visual Studio Code
+
+obi does not yet create the launch.json file Visual Studio Code
+needs to run your program.  If you want it to, please let us know.
+
 ## Sublime Text Users
 
 This project has a [sublime-project file]({{project_name}}.sublime-project) that comes equipped with some useful build systems:
@@ -39,20 +50,15 @@ This project has a [sublime-project file]({{project_name}}.sublime-project) that
 - `obi-go`: build and run the app
 - `obi-go:my-room`: build and run the app in your custom room *NOTE:* Requires custom setup in your project.yaml
 
+## Switching to Meson
 
-## Riding without obi
+By default, 'obi build' will use CMake, which reads CMakeLists.txt to figure out how to build your project.
 
-### Build
-```bash
-cd build
-cmake -DG_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}} ..
-make -j8 -l8
-```
+CMake works, but is not beloved by all.
 
-### Run
-```bash
-build/{{project_name}} [(<screen.protein> <feld.protein>)]
-```
+Meson is a simpler, more modern alternative to CMake.
+If you want to try it, edit project.yaml and uncomment the definition for meson-args.
+'obi build' will then use meson, which reads meson.build to figure out how to build your project.
 
 ### Change default g-speak version
 obi detects the g-speak version present at the time, and sets that
@@ -64,6 +70,33 @@ ob-set-defaults --g-speak 4.2
 ```
 Try 'ob-set-defaults --help' for more info.
 
+## Riding without obi
+
+### Build
+```bash
+cd build
+cmake [-DG_SPEAK_HOME=/opt/oblong/g-speak{{g_speak_version}}] ..
+ninja
+```
+
+Or, to use meson,
+```bash
+cd build
+obenv meson ..
+ninja
+```
+
+### Run
+```bash
+build/{{project_name}} [(<screen.protein> <feld.protein>)]
+```
+
+### Rebuild
+```bash
+cd build
+ninja
+```
+
 ### Build packages (mostly Oblong-specific)
 The tool bau, included with the g-speak platform SDK,
 is a bit like obi, but centers around building packages
@@ -74,7 +107,6 @@ and the default recipes in /usr/bin/bau-defaults.
 
 For instance,
 ```bash
-bau all
+bau build
 ```
 It takes the same options as ob-set-defaults.  Try 'bau --help' and 'bau help' for more info.
-

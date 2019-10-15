@@ -13,7 +13,7 @@ Build-Depends: debhelper (>= 7.0.50~),
 ## Ubuntu 17.04 has cmake 3.7.2, which is great.
 ##             oblong-yobuild12-cmake | cmake (>= 3.7.0),
 ## However, ubuntu 16.04's 3.5.1 is otherwise ok, so let developers slide for now
-               oblong-yobuild12-cmake | cmake (>= 3.5.1),
+               oblong-yobuild{{yobuild_major}}-cmake | cmake (>= 3.5.1),
 ##  We default to building with ninja
                ninja-build,
 ##  If ubuntu >= 16.04, pull in strip-nondeterminism, for reproducible builds
